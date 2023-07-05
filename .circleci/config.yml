@@ -2,7 +2,7 @@
 # Stacks detected: deps:java:.
 version: 2.1
 jobs:
-  test-java:
+  standard-build:
     docker:
       - image: cimg/openjdk:17.0
     steps:
