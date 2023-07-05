@@ -34,7 +34,7 @@ jobs:
 workflows:
   build-and-test:
     jobs:
-      - test-java
+      - standard-build
     # - deploy:
     #     requires:
     #       - test-java
