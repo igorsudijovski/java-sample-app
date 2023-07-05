@@ -20,6 +20,23 @@
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+
+  <distributionManagement>
+    <!-- The distribution URLs should be defined in the properties of
+         the maven installation's settings.xml -->
+    <repository>
+      <id>nexus</id>
+      <name>nexus</name>
+      <url>https://repo.extranet.netcetera.biz/nexus/repository/nca-301-5-external-repository-test-snapshot/</url>
+      <uniqueVersion>false</uniqueVersion>
+    </repository>
+    <snapshotRepository>
+      <id>nexus</id>
+      <name>nexus</name>
+      <url>https://repo.extranet.netcetera.biz/nexus/repository/nca-301-5-external-repository-test-snapshot/</url>
+      <uniqueVersion>false</uniqueVersion>
+    </snapshotRepository>
+  </distributionManagement>
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
