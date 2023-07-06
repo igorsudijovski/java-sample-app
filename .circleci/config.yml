@@ -1,10 +1,13 @@
 # This config was automatically generated from your source code
 # Stacks detected: deps:java:.
 version: 2.1
-jobs:
-  standard-build:
-    docker:
-      - image: cimg/openjdk:17.0
+commands:
+  build-and-sonar:
+    description: have standard build and sonar build
+    parameters:
+      sonar:
+        type: boolean
+        default: false
     steps:
       - checkout
       - run:
@@ -14,14 +17,29 @@ jobs:
                     sort | xargs cat > /tmp/CIRCLECI_CACHE_KEY
       - restore_cache:
           key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
-      - run:
-          command: mvn -s .circleci/settings.xml clean deploy
+      - when:
+          condition: <<parameters.sonar>>
+          steps:
+            - run:
+                command: mvn -s .circleci/settings.xml org.jacoco:jacoco-maven-plugin:prepare-agent clean install spotbugs:spotbugs sonar:sonar
+      - unless:
+          condition: <<parameters.sonar>>
+          steps:
+            - run:
+                command: mvn -s .circleci/settings.xml clean deploy
       - store_test_results:
           path: target/surefire-reports
       - save_cache:
           key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
           paths:
             - ~/.m2/repository
+jobs:
+  standard-build:
+    docker:
+      - image: cimg/openjdk:17.0
+    steps:
+      - build-and-sonar:
+          sonar: false
   deploy:
     # This is an example deploy job, not actually used by te workflow
     docker:
