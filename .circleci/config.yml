@@ -1,6 +1,10 @@
 # This config was automatically generated from your source code
 # Stacks detected: deps:java:.
 version: 2.1
+parameters:
+  execute-sonar:
+    type: boolean
+    default: false
 commands:
   build-and-sonar:
     description: have standard build and sonar build
@@ -39,7 +43,7 @@ jobs:
       - image: cimg/openjdk:17.0
     steps:
       - build-and-sonar:
-          sonar: false
+          sonar: <<parameters.execute-sonar>>
   deploy:
     # This is an example deploy job, not actually used by te workflow
     docker:
