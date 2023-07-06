@@ -43,7 +43,7 @@ jobs:
       - image: cimg/openjdk:17.0
     steps:
       - build-and-sonar:
-          sonar: <<parameters.execute-sonar>>
+          sonar: <<pipeline.parameters.execute-sonar>>
   deploy:
     # This is an example deploy job, not actually used by te workflow
     docker:
